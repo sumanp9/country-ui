@@ -1,0 +1,13 @@
+<h2>Countries</h2>
+
+<div class="container">
+
+<mat-list *ngIf="listOfCountries">
+  <mat-list-item *ngFor="let country of listOfCountries"
+  (click)="openDialog(country.country_name)"
+  >
+    {{country.country_name}}
+  </mat-list-item>
+</mat-list>
+
+</div>
