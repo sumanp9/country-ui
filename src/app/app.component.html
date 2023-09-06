@@ -2,12 +2,16 @@
 
 <div class="container">
 
-<mat-list *ngIf="listOfCountries">
-  <mat-list-item *ngFor="let country of listOfCountries"
-  (click)="openDialog(country.country_name)"
-  >
-    {{country.country_name}}
-  </mat-list-item>
-</mat-list>
+<mat-accordion>
+  <mat-expansion-panel hideToggle *ngFor="let country of listOfCountries">
+    <mat-expansion-panel-header (click) ="onCapital(country.country_name)">
+      <mat-panel-title>
+        {{country.country_name}}
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+    <p *ngIf="panelClicked[country.country_name]">{{this.capitalCity[0].capital_city}}</p>
+  </mat-expansion-panel>
+</mat-accordion>
+
 
 </div>
