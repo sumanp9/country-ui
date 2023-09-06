@@ -5,6 +5,7 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatListModule } from '@angular/material/list';
 import {MatDialog, MatDialogModule} from '@angular/material/dialog'; 
+import {MatExpansionModule} from '@angular/material/expansion'; 
 import {HttpClientModule} from '@angular/common/http';
 import { CountryDetailDialogComponent } from './country-detail-dialog/country-detail-dialog.component'
 
@@ -19,7 +20,8 @@ import { CountryDetailDialogComponent } from './country-detail-dialog/country-de
     BrowserAnimationsModule,
     HttpClientModule,
     MatListModule,
-    MatDialogModule
+    MatDialogModule,
+    MatExpansionModule
   ],
   providers: [],
   bootstrap: [AppComponent]

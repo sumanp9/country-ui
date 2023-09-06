@@ -4,6 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ApiService } from './service/api.service';
 import { CityInterface, CountryInterface } from './country-interface';
 import { CountryDetailDialogComponent } from './country-detail-dialog/country-detail-dialog.component';
+import { map } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -14,8 +15,8 @@ export class AppComponent {
   title = 'myApp';
   listOfCountries: CountryInterface[] = [];
   capitalCity: CityInterface[] = [];
-
- // listOfCountries: Array<string> = ['USA', 'France'];
+  capital:string= "";
+  panelClicked: { [countryName: string]: boolean } = {};
 
   constructor(private apiService: ApiService, private dialog: MatDialog) { }
 
@@ -25,17 +26,12 @@ export class AppComponent {
     })
   }
 
-  openDialog(country: string): void {
-
-    console.log("County:"+ country);
+  onCapital(country:string): void {
+    this.panelClicked[country] = !this.panelClicked[country];
 
     this.apiService.getCapitalCity(country).subscribe(result => {
       this.capitalCity = result;
-      console.log(this.capitalCity[0].capital_city)
-      this.dialog.open(CountryDetailDialogComponent, {
-        data: {country: country, capital_city: this.capitalCity[0].capital_city}
-      })
     })
-    
+   
   }
 }

@@ -16,7 +16,7 @@ export class ApiService {
     return this.http.get<CountryInterface[]>('http://localhost:8081/api/getCountries');
   }
 
-  getCapitalCity(city: String): Observable<any> {
-    return this.http.get('http://localhost:8081/api/getCapitalCity/'+ city);
+  getCapitalCity(country: String): Observable<any> {
+    return this.http.get('http://localhost:8081/api/getCapitalCity/'+ country);
   }
 }
