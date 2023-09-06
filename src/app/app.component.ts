@@ -27,26 +27,11 @@ export class AppComponent {
   }
 
   onCapital(country:string): void {
-    console.log(country);
     this.panelClicked[country] = !this.panelClicked[country];
 
     this.apiService.getCapitalCity(country).subscribe(result => {
       this.capitalCity = result;
     })
    
-  }
-
-  openDialog(country: string): void {
-
-    console.log("County:"+ country);
-
-    this.apiService.getCapitalCity(country).subscribe(result => {
-      this.capitalCity = result;
-      console.log(this.capitalCity[0].capital_city)
-      this.dialog.open(CountryDetailDialogComponent, {
-        data: {country: country, capital_city: this.capitalCity[0].capital_city}
-      })
-    })
-    
   }
 }
