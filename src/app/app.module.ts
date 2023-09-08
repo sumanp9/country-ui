@@ -11,16 +11,19 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input'; 
 import { FormsModule } from '@angular/forms';
 import {MatExpansionModule} from '@angular/material/expansion'; 
+import {MatMenuModule} from '@angular/material/menu'; 
 import {HttpClientModule} from '@angular/common/http';
 import { CountryDetailDialogComponent } from './country-detail-dialog/country-detail-dialog.component';
-import { UpdateDialogComponent } from './update-dialog/update-dialog.component'
+import { UpdateDialogComponent } from './update-dialog/update-dialog.component';
+import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-dialog.component'
 
 
 @NgModule({
   declarations: [
     AppComponent,
     CountryDetailDialogComponent,
-    UpdateDialogComponent
+    UpdateDialogComponent,
+    ConfirmationDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -33,7 +36,8 @@ import { UpdateDialogComponent } from './update-dialog/update-dialog.component'
     MatIconModule,
     MatFormFieldModule,
     MatInputModule,
-    FormsModule
+    FormsModule,
+    MatMenuModule
   ],
   providers: [],
   bootstrap: [AppComponent]

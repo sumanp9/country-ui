@@ -1,11 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import {MatListModule} from '@angular/material/list';
+import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ApiService } from './service/api.service';
-import { CityInterface, CountryInterface } from './country-interface';
-import { CountryDetailDialogComponent } from './country-detail-dialog/country-detail-dialog.component';
-import { map } from 'rxjs';
+import { CountryInterface } from './country-interface';
 import { UpdateDialogComponent } from './update-dialog/update-dialog.component';
+import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-dialog.component';
 
 @Component({
   selector: 'app-root',
@@ -15,11 +13,11 @@ import { UpdateDialogComponent } from './update-dialog/update-dialog.component';
 export class AppComponent {
   title = 'myApp';
   listOfCountries: CountryInterface[] = [];
-  capitalCity: CityInterface[] = [];
-  capital:string= "";
+  capitalCity: string ='';
   panelClicked: { [countryName: string]: boolean } = {};
 
-  constructor(private apiService: ApiService, private dialog: MatDialog) { }
+  constructor(private apiService: ApiService, private dialog: MatDialog) { 
+  } 
 
   ngOnInit(): void{
     this.retrieveData();
@@ -31,26 +29,52 @@ export class AppComponent {
     })
   }
   
+   getCapitalCity(countryName: string) {
 
-  onCapital(country:string): void {
+    this.panelClicked[countryName] = !this.panelClicked[countryName];
 
-    console.log('Country: '+ country)
-    this.panelClicked[country] = !this.panelClicked[country];
-
-    this.apiService.getCapitalCity(country).subscribe(result => {
-      this.capitalCity = result;
-    })
-   
+    this.apiService.getCapitalCity(countryName).subscribe(result => {
+      this.capitalCity = result.capital_city;
+       });  
   }
 
-  openUpdateDialog(): void{
-    console.log("update clicked");
-      const dialogRef = this.dialog.open(UpdateDialogComponent, {
-      data: {country_name: "", capital: ""}
 
+   openUpdateDialog(countryId?:number, countryName?: string): void{  
+    
+   if(countryName) { //countryId
+      console.log("country exists "+ countryName );     
+      let cap= '';
+        this.apiService.getCapitalCity(countryName).subscribe(res =>{
+         cap = res.capital_city;
+         const dialogRef = this.dialog.open(UpdateDialogComponent, {
+          data: {country_id: countryId, country_name: countryName, capital: cap}
+         })
+         dialogRef.afterClosed().subscribe(()=> this.retrieveData());
+      
+      })
+    } else {
+
+      const dialogRef = this.dialog.open(UpdateDialogComponent, {
+      data: {country_name: '', capital:  ''}
+ 
     });
     dialogRef.afterClosed().subscribe(result => {
       this.retrieveData();
     })
+  }
+  }
+
+  delete(countryName?: string) :void{
+    const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+      data: countryName
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      this.retrieveData();
+    })
+  }
+
+  openMenu(event: Event): void{
+    event.stopPropagation();
   }
 }

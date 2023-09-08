@@ -19,16 +19,19 @@ export class ApiService {
   }
 
   getCapitalCity(country: String): Observable<any> {
-
-    console.log("Inserver")
     return this.http.get(this.url + `getCapitalCity/`+ country);
   }
 
   addCountryDetails(countryData: CountryData): Observable<CountryData>{
-
-    console.log(countryData)
-
     return this.http.post<CountryData>(this.url+ `addCountryDetails`, countryData);
+  }
 
+  updateCountryDetails(countryData: CountryData): Observable<CountryData>{
+    console.log(countryData)
+    return this.http.put<CountryData>(this.url+ `updateCountry`, countryData);
+  }
+
+  deleteCountryData(countryName: string): Observable<any> {
+    return this.http.delete(this.url+ `deleteCountryData/`+ countryName);
   }
 }
