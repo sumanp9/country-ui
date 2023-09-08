@@ -13,7 +13,7 @@
  
  <mat-accordion>
    <mat-expansion-panel hideToggle *ngFor="let country of listOfCountries">
-     <mat-expansion-panel-header (click) ="getCapitalCity(country.country_name)">
+     <mat-expansion-panel-header (click) ="getCapitalCity(country.id)">
        <mat-panel-title>
          {{country.country_name}}
          <button mat-icon-button aria-label="Menu" 
@@ -27,14 +27,14 @@
            <mat-icon>edit</mat-icon>
            <span>Edit</span>
          </button>
-         <button mat-menu-item (click)="delete(country.country_name)">
+         <button mat-menu-item (click)="delete(country.id, country.country_name)">
           <mat-icon>delete</mat-icon>
           <span>Delete</span>
         </button>
          </mat-menu>
        </mat-panel-title>
      </mat-expansion-panel-header>
-     <p *ngIf="panelClicked[country.country_name]">
+     <p *ngIf="panelClicked[country.id]">
        Capital City: {{this.capitalCity}}</p>
    </mat-expansion-panel>
  </mat-accordion>

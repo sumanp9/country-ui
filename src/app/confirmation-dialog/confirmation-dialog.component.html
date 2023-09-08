@@ -1,7 +1,7 @@
 <h2 mat-dialog-title *ngIf="(countryName)">Delete Confirmation</h2>
 
 <div>
-    <h3>Do you wanna to delete data of Country: {{countryName}} ?</h3>
+    <h3>Do you wanna to delete data of Country: {{this.countryName}} ?</h3>
     <button mat-flat-button (click)="delete()">Yes</button> &nbsp;
     <button mat-flat-button (click)="close()">No</button>
 </div>

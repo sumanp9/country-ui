@@ -14,7 +14,7 @@ export class AppComponent {
   title = 'myApp';
   listOfCountries: CountryInterface[] = [];
   capitalCity: string ='';
-  panelClicked: { [countryName: string]: boolean } = {};
+  panelClicked: { [id: number]: boolean } = {};
 
   constructor(private apiService: ApiService, private dialog: MatDialog) { 
   } 
@@ -29,22 +29,24 @@ export class AppComponent {
     })
   }
   
-   getCapitalCity(countryName: string) {
+   getCapitalCity(id: number) {
 
-    this.panelClicked[countryName] = !this.panelClicked[countryName];
+    this.panelClicked[id] = !this.panelClicked[id];
 
-    this.apiService.getCapitalCity(countryName).subscribe(result => {
+    this.apiService.getCapitalCity(id).subscribe(result => {
+      
       this.capitalCity = result.capital_city;
+      console.log(this.capitalCity)
        });  
   }
 
 
-   openUpdateDialog(countryId?:number, countryName?: string): void{  
+   openUpdateDialog(countryId?:number, countryName?:string): void{
+    console.log(countryName) 
     
-   if(countryName) { //countryId
-      console.log("country exists "+ countryName );     
+   if(countryId) {
       let cap= '';
-        this.apiService.getCapitalCity(countryName).subscribe(res =>{
+        this.apiService.getCapitalCity(countryId).subscribe(res =>{
          cap = res.capital_city;
          const dialogRef = this.dialog.open(UpdateDialogComponent, {
           data: {country_id: countryId, country_name: countryName, capital: cap}
@@ -64,9 +66,9 @@ export class AppComponent {
   }
   }
 
-  delete(countryName?: string) :void{
+  delete(countryId?: number, countryName?:string) :void{
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
-      data: countryName
+      data: {id: countryId, name: countryName}
     });
 
     dialogRef.afterClosed().subscribe(result => {

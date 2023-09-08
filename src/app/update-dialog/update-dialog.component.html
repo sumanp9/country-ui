@@ -1,5 +1,5 @@
-<h2 mat-dialog-title *ngIf="(data.country_name)">Edit Country</h2>
-<h2 mat-dialog-title *ngIf="!(data.country_name)">Add Country</h2>
+<h2 mat-dialog-title *ngIf="(data.country_id)">Edit Country</h2>
+<h2 mat-dialog-title *ngIf="!(data.country_id)">Add Country</h2>
 <div>
     <table class="example-full-width" cellspacing="0"><tr>
         <td><mat-form-field class="example-full-width">
@@ -13,8 +13,8 @@
       </tr>
     </table>
 
-    <button class="button" mat-button (click)="onSubmit()" *ngIf="!(data.country_name)">Submit</button>
-    <button class="button" mat-button (click)="onUpdate()" *ngIf="(data.country_name)">Update</button>
+    <button class="button" mat-button (click)="onSubmit()" *ngIf="!(data.country_id)">Submit</button>
+    <button class="button" mat-button (click)="onUpdate()" *ngIf="(data.country_id)">Update</button>
     <button mat-flat-button (click)="close()">Close</button>
    
 </div>

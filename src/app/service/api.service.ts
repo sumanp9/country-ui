@@ -18,8 +18,8 @@ export class ApiService {
     return this.http.get<CountryInterface[]>(this.url+ `getCountries`);
   }
 
-  getCapitalCity(country: String): Observable<any> {
-    return this.http.get(this.url + `getCapitalCity/`+ country);
+  getCapitalCity(id: number): Observable<any> {
+    return this.http.get(this.url + `getCapitalCity/`+ id);
   }
 
   addCountryDetails(countryData: CountryData): Observable<CountryData>{
@@ -31,7 +31,7 @@ export class ApiService {
     return this.http.put<CountryData>(this.url+ `updateCountry`, countryData);
   }
 
-  deleteCountryData(countryName: string): Observable<any> {
-    return this.http.delete(this.url+ `deleteCountryData/`+ countryName);
+  deleteCountryData(id: number): Observable<any> {
+    return this.http.delete(this.url+ `deleteCountryData/`+ id);
   }
 }

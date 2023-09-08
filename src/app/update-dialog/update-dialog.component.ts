@@ -11,7 +11,7 @@ import { ApiService } from '../service/api.service';
 export class UpdateDialogComponent {
 
   countryData: CountryData = {
-    id: 0,// need to revise for add
+    id: 0,
     country_name: "",
     capital: ""
   }

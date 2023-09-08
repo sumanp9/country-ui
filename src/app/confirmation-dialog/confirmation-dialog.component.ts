@@ -10,19 +10,19 @@ import { ApiService } from '../service/api.service';
 export class ConfirmationDialogComponent {
 
   countryName: string = "";
+  countryId: number =0;
 
   constructor(
     public dialogRef: MatDialogRef<ConfirmationDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: string,
+    @Inject(MAT_DIALOG_DATA) public data: any,
     public service: ApiService
   ){
-    this.countryName = data;
-
+    this.countryName = data.name;
+    this.countryId = data.id;
   }
 
-
   delete(): void{
-    this.service.deleteCountryData(this.countryName).subscribe(result =>{
+   this.service.deleteCountryData(this.countryId).subscribe(result =>{
       this.dialogRef.close();
     })
   }
