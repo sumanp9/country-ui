@@ -51,7 +51,8 @@ export class AppComponent {
          const dialogRef = this.dialog.open(UpdateDialogComponent, {
           data: {country_id: countryId, country_name: countryName, capital: cap}
          })
-         dialogRef.afterClosed().subscribe(()=> this.retrieveData());
+         dialogRef.afterClosed().subscribe(()=> {
+          this.retrieveData()});
       
       })
     } else {

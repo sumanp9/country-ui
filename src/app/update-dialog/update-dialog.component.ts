@@ -45,4 +45,9 @@ export class UpdateDialogComponent {
   close(): void{
     this.dialogRef.close();
   }
+
+  disabledButton(countryValue:string, cityValue: string): boolean {
+    if(countryValue == "" || cityValue == "") return true
+    return false;
+  }
 }

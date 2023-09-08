@@ -13,8 +13,8 @@
       </tr>
     </table>
 
-    <button class="button" mat-button (click)="onSubmit()" *ngIf="!(data.country_id)">Submit</button>
-    <button class="button" mat-button (click)="onUpdate()" *ngIf="(data.country_id)">Update</button>
+    <button class="button" mat-button [disabled] = "disabledButton(this.countryData.country_name, this.countryData.capital)"(click)="onSubmit()" *ngIf="!(data.country_id)">Submit</button>
+    <button class="button" mat-button [disabled] = "disabledButton(this.countryData.country_name, this.countryData.capital)" (click)="onUpdate()" *ngIf="(data.country_id)">Update</button>
     <button mat-flat-button (click)="close()">Close</button>
    
 </div>
