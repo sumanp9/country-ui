@@ -21,3 +21,8 @@ mat-list {
     float: right;
     padding-right: 1%;
    }
+
+   .menu-button{
+    position: absolute; /* Position the button relative to the viewport */
+    right: 10px;
+     }
