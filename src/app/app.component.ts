@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ApiService } from './service/api.service';
-import { CountryInterface } from './country-interface';
+import { CountryInterface, Cities } from './country-interface';
 import { UpdateDialogComponent } from './update-dialog/update-dialog.component';
 import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-dialog.component';
 
@@ -15,6 +15,7 @@ export class AppComponent {
   listOfCountries: CountryInterface[] = [];
   capitalCity: string ='';
   panelClicked: { [id: number]: boolean } = {};
+  listOfCities: Cities[] =[];
 
   constructor(private apiService: ApiService, private dialog: MatDialog) { 
   } 
@@ -26,10 +27,13 @@ export class AppComponent {
   retrieveData(): void{
     this.apiService.getAllCountries().subscribe(data => {
       this.listOfCountries = data;
+
+      console.log(data);
     })
   }
   
    getCapitalCity(id: number) {
+
 
     this.panelClicked[id] = !this.panelClicked[id];
 
@@ -37,14 +41,26 @@ export class AppComponent {
       
       this.capitalCity = result.capital_city;
       console.log(this.capitalCity)
-       });  
+       });
+
+    this.getAllCities(id)
+         
+  }
+
+  getAllCities(country_id: number) {
+    this.panelClicked[country_id] = !this.panelClicked[country_id];
+    this.apiService.getAllCitiesOfCountry(country_id).subscribe(result => {
+      this.listOfCities = result;
+      this.listOfCities.forEach(val => console.log(val.name))
+    })
+
   }
 
 
    openUpdateDialog(countryId?:number, countryName?:string): void{
-    console.log(countryName) 
     
    if(countryId) {
+    console.log("Has country Id");
       let cap= '';
         this.apiService.getCapitalCity(countryId).subscribe(res =>{
          cap = res.capital_city;
@@ -56,6 +72,7 @@ export class AppComponent {
       
       })
     } else {
+      console.log("Has no country Id");
 
       const dialogRef = this.dialog.open(UpdateDialogComponent, {
       data: {country_name: '', capital:  ''}

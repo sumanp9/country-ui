@@ -34,8 +34,17 @@
          </mat-menu>
        </mat-panel-title>
      </mat-expansion-panel-header>
-     <p *ngIf="panelClicked[country.id]">
+     <p >
        Capital City: {{this.capitalCity}}</p>
+
+       <div *ngIf="listOfCities" >
+        <p>Cities:
+          <ng-container *ngFor="let city of listOfCities; let last = last">
+             {{ city.name }}
+            <span *ngIf="!last">, </span>
+          </ng-container>
+                </p>
+       </div>
    </mat-expansion-panel>
  </mat-accordion>
  

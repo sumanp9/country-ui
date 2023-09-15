@@ -1,21 +1,48 @@
-<h2 mat-dialog-title *ngIf="(data.country_id)">Edit Country</h2>
-<h2 mat-dialog-title *ngIf="!(data.country_id)">Add Country</h2>
+<h2 mat-dialog-title>
+  {{ data.country_id ? 'Edit Country' : 'Add Country' }}
+  <button mat-icon-button (click)="close()" class="add-button"><mat-icon>close</mat-icon></button>
+</h2>
+
+
+
 <div>
     <table class="example-full-width" cellspacing="0"><tr>
-        <td><mat-form-field class="example-full-width">
+        <td><mat-form-field class="example-full-width1">
           <mat-label>Country Name</mat-label>
           <input matInput [(ngModel)] ="this.countryData.country_name">
-        </mat-form-field></td>
-        <td><mat-form-field class="example-full-width">
+        </mat-form-field>
+       
+      </td>
+        <td><mat-form-field class="example-full-width1">
           <mat-label>Capital City</mat-label>
           <input matInput [(ngModel)] = "this.countryData.capital">
         </mat-form-field></td>
-      </tr>
+      </tr>      
     </table>
+
+
+<div class="scrollable-form" *ngIf="(data.country_id)">
+  <p>Cities
+  <button class="add-button" [hidden]="this.addCityButtonPressed" mat-icon-button (click)="addCity()">
+    <mat-icon>add</mat-icon>
+  </button>
+</p>
+  <div *ngFor="let city of listOfCities; let i = index">
+    <mat-form-field class="example-full-width">
+      <input matInput [(ngModel)]="city.name" type="text">
+      <button class="add-button" mat-icon-button (click) = "editButton(i)"  *ngIf="!showButtons[i]">
+        <mat-icon>edit</mat-icon>
+        
+      </button>
+      <button class="add-button" mat-button (click)="saveCity(city)"  *ngIf="showButtons[i]">save</button>
+      <button class="add-button" mat-button (click)="deleteCity(city)"  *ngIf="showButtons[i]">Delete</button>
+    </mat-form-field>
+  </div>
+</div>
+ 
 
     <button class="button" mat-button [disabled] = "disabledButton(this.countryData.country_name, this.countryData.capital)"(click)="onSubmit()" *ngIf="!(data.country_id)">Submit</button>
     <button class="button" mat-button [disabled] = "disabledButton(this.countryData.country_name, this.countryData.capital)" (click)="onUpdate()" *ngIf="(data.country_id)">Update</button>
-    <button mat-flat-button (click)="close()">Close</button>
    
 </div>
 
