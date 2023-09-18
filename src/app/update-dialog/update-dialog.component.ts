@@ -21,6 +21,10 @@ export class UpdateDialogComponent {
   addCityButtonPressed = false;
   showButtons: boolean[] = [];
 
+  isCountryDisabled = true;
+  isCapitalDisabled = true;
+
+
   constructor(
     public dialogRef: MatDialogRef<UpdateDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -42,13 +46,7 @@ export class UpdateDialogComponent {
     this.dialogRef.close();
   }
 
-  onUpdate(): void{
-    console.log("OnUpdate method " + this.countryData.country_name, this.countryData.capital , this.countryData.id)
 
-    this.service.updateCountryDetails(this.countryData).subscribe(() => {
-    });
-    this.dialogRef.close();
-  }
 
   addCity(): void{
     this.addCityButtonPressed = true;
@@ -59,20 +57,30 @@ export class UpdateDialogComponent {
     }
     this.listOfCities.unshift(newCity);
     this.showButtons.unshift(false);
+    const cityIndex = this.listOfCities.indexOf(newCity);
+    this.showButtons[cityIndex] = true;
+
 
   }
 
   saveCity(city: Cities): void{
+    
     this.addCityButtonPressed = false;
     this.listOfCities.forEach(c => {
       console.log(c.id, c.name)
     })
+    if(city.id ==0) {
     this.service.addCityToCountry(this.countryData.id, city.name, city.id).subscribe(res =>{
       this.refreshDialogData();
     }); 
+  } else{
+    this.service.updateCity(city).subscribe(()=> this.refreshDialogData());
+  }
+
     const cityIndex = this.listOfCities.indexOf(city);
     
     this.showButtons[cityIndex] = false;
+
 
   }
 
@@ -82,9 +90,6 @@ export class UpdateDialogComponent {
       this.service.deleteCity(city.id).subscribe(res=> 
         this.refreshDialogData());
     }
-
-    
-
     
   }
 
@@ -96,14 +101,7 @@ export class UpdateDialogComponent {
   }
 
   refreshDialogData(): void {
-    // Refresh the list of cities
     this.getCities(this.countryData.id);
-  }
-
-
-  close(): void{
-
-    this.dialogRef.close();
   }
 
   disabledButton(countryValue:string, cityValue: string): boolean {
@@ -114,4 +112,35 @@ export class UpdateDialogComponent {
   editButton(cityIndex: number): void{
     this.showButtons[cityIndex] = true;
   }
+
+  toggleCountry(): void{
+    this.isCountryDisabled = false;
+  }
+
+  toggleCapital(): void{
+    this.isCapitalDisabled = false;
+  }
+
+  updateCapital(): void{
+    this.isCapitalDisabled = true;
+    this.service.updateCapital(this.countryData).subscribe();
+  }
+
+  updateCountry(): void{
+    this.isCountryDisabled = true;
+      this.service.updateCountry(this.countryData).subscribe(() => {
+      });
+    }
+    
+  revertAdd(): void {
+    this.addCityButtonPressed = false;
+    this.listOfCities.shift();
+    this.showButtons.shift();
+    
+  }
+
+  close(): void{
+    this.dialogRef.close();
+  }
 }
+
