@@ -12,3 +12,8 @@ export interface CountryData{
     country_name: string;
     capital: string;
 }
+
+export interface Cities {
+    id: number,
+    name: string;
+}
